@@ -1,10 +1,23 @@
+import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useContestData } from "../../../hooks/useContestData";
+import { VoteCarousel } from "./components/VoteCarousel";
 
 export function VotePage() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  const { status, errorMessage, contest } = useContestData(token);
+  const { status, errorMessage, contest, categories, nominees, voter } =
+    useContestData(token);
+
+  const nomineesByCategory = useMemo(() => {
+    return nominees.reduce<Record<string, typeof nominees>>((acc, nominee) => {
+      if (!acc[nominee.category_id]) {
+        acc[nominee.category_id] = [];
+      }
+      acc[nominee.category_id].push(nominee);
+      return acc;
+    }, {});
+  }, [nominees]);
 
   return (
     <main>
@@ -25,10 +38,15 @@ export function VotePage() {
         <p>{errorMessage ?? "Não foi possível carregar a votação."}</p>
       )}
       {status === "ready" && (
-        <div>
-          <h1>{contest?.name}</h1>
-          <p>Fluxo de votação em breve.</p>
-        </div>
+        contest &&
+        voter && (
+          <VoteCarousel
+            contest={contest}
+            voter={voter}
+            categories={categories}
+            nomineesByCategory={nomineesByCategory}
+          />
+        )
       )}
     </main>
   );
