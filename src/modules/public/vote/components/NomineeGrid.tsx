@@ -12,8 +12,16 @@ export function NomineeGrid({
   selectedNomineeId,
   onSelectNominee,
 }: NomineeGridProps) {
+  if (nominees.length === 0) {
+    return (
+      <div className="rounded-2xl border border-violet-500/40 bg-slate-900/60 p-4 text-center text-sm text-slate-300">
+        Nenhum indicado disponível nesta categoria.
+      </div>
+    );
+  }
+
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="flex flex-col gap-3">
       {nominees.map((nominee) => (
         <NomineeCard
           key={nominee.id}

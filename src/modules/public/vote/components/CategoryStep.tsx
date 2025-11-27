@@ -25,11 +25,16 @@ export function CategoryStep({
   totalSteps,
 }: CategoryStepProps) {
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-xl space-y-6 overflow-hidden rounded-3xl border border-violet-500/40 bg-slate-900/70 p-6 shadow-[0_0_18px_rgba(139,92,246,0.25)] md:p-8">
       <div className="space-y-2">
-        <h2 className="text-2xl font-semibold text-white">{category.name}</h2>
+        <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/80">
+          Quarteto Awards
+        </p>
+        <h2 className="text-2xl font-bold text-white md:text-3xl">
+          {category.name}
+        </h2>
         {category.description && (
-          <p className="text-slate-300">{category.description}</p>
+          <p className="text-sm text-slate-300">{category.description}</p>
         )}
       </div>
 
@@ -41,16 +46,22 @@ export function CategoryStep({
         onSelectNominee={onSelectNominee}
       />
 
-      <NeonButton
-        fullWidth
-        variant="primary"
-        disabled={!selectedNomineeId}
-        onClick={onConfirm}
-      >
-        {isLastCategory
-          ? "Confirmar e finalizar votação"
-          : "Confirmar e ir para a próxima"}
-      </NeonButton>
+      <div className="space-y-3">
+        <p className="text-sm text-slate-300">
+          Escolha 1 opção para continuar.
+        </p>
+        <NeonButton
+          fullWidth
+          variant="primary"
+          size="lg"
+          disabled={!selectedNomineeId}
+          onClick={onConfirm}
+        >
+          {isLastCategory
+            ? "Confirmar e finalizar votação"
+            : "Confirmar e ir para a próxima"}
+        </NeonButton>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import { PageContainer } from "../../../components/layout/PageContainer";
 import { useContestData } from "../../../hooks/useContestData";
 import { VoteCarousel } from "./components/VoteCarousel";
 
@@ -20,34 +21,41 @@ export function VotePage() {
   }, [nominees]);
 
   return (
-    <main>
-      {status === "loading" && <p>Carregando votação...</p>}
-      {status === "invalidLink" && (
-        <p>{errorMessage ?? "Token inválido ou expirado."}</p>
-      )}
-      {status === "inactiveLink" && (
-        <p>{errorMessage ?? "Link inativo. Solicite um novo token."}</p>
-      )}
-      {status === "outOfPeriod" && (
-        <p>{errorMessage ?? "Fora do período de votação."}</p>
-      )}
-      {status === "alreadyVoted" && (
-        <p>{errorMessage ?? "Você já registrou seus votos para este concurso."}</p>
-      )}
-      {status === "error" && (
-        <p>{errorMessage ?? "Não foi possível carregar a votação."}</p>
-      )}
-      {status === "ready" && (
-        contest &&
-        voter && (
-          <VoteCarousel
-            contest={contest}
-            voter={voter}
-            categories={categories}
-            nomineesByCategory={nomineesByCategory}
-          />
-        )
-      )}
+    <main className="bg-[#05051A]">
+      <PageContainer>
+        {status === "loading" && <p className="text-slate-200">Carregando votação...</p>}
+        {status === "invalidLink" && (
+          <p className="text-slate-200">{errorMessage ?? "Token inválido ou expirado."}</p>
+        )}
+        {status === "inactiveLink" && (
+          <p className="text-slate-200">
+            {errorMessage ?? "Link inativo. Solicite um novo token."}
+          </p>
+        )}
+        {status === "outOfPeriod" && (
+          <p className="text-slate-200">{errorMessage ?? "Fora do período de votação."}</p>
+        )}
+        {status === "alreadyVoted" && (
+          <p className="text-slate-200">
+            {errorMessage ?? "Você já registrou seus votos para este concurso."}
+          </p>
+        )}
+        {status === "error" && (
+          <p className="text-slate-200">
+            {errorMessage ?? "Não foi possível carregar a votação."}
+          </p>
+        )}
+        {status === "ready" &&
+          contest &&
+          voter && (
+            <VoteCarousel
+              contest={contest}
+              voter={voter}
+              categories={categories}
+              nomineesByCategory={nomineesByCategory}
+            />
+          )}
+      </PageContainer>
     </main>
   );
 }
