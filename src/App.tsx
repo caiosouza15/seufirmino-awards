@@ -1,9 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
+import { AppRouter } from "./router";
 
 function App() {
-  console.log("Supabase OK");
-
-  return <>Hello my frind</>;
+  return <AppRouter />;
 }
 
 export default App;
