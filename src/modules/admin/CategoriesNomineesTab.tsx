@@ -335,6 +335,14 @@ export function CategoriesNomineesTab() {
       setError("Limite de 6 indicados por categoria atingido.");
       return;
     }
+    if (!nomineeForm.name.trim()) {
+      setError("Nome do indicado é obrigatório.");
+      return;
+    }
+    if (Number.isNaN(nomineeForm.sort_order)) {
+      setError("Ordem de exibição deve ser um número.");
+      return;
+    }
     setIsSavingNominee(true);
     setError(null);
 

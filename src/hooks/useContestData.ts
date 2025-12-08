@@ -93,7 +93,9 @@ export function useContestData(token: string | null): ContestDataResult {
         setErrorMessage(
           !hasStarted
             ? "A votacao ainda nao comecou. Volte em breve."
-            : "Periodo de votacao encerrado."
+            : contestData.is_active
+            ? "Periodo de votacao encerrado."
+            : "Concurso inativo no momento."
         );
         return;
       }
