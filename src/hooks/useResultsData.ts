@@ -25,11 +25,6 @@ export type UseResultsDataResult =
   | { status: "beforeReveal"; contest: Contest; categories: ResultsCategory[] }
   | { status: "ready"; contest: Contest; categories: ResultsCategory[] };
 
-type VotesByNominee = {
-  nominee_id: string;
-  total: number;
-};
-
 export function useResultsData(): UseResultsDataResult {
   const [status, setStatus] = useState<ResultsStatus>("loading");
   const [contest, setContest] = useState<Contest | null>(null);

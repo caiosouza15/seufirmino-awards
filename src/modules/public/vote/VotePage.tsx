@@ -93,6 +93,7 @@ export function VotePage() {
   return (
     <main className="bg-[#05051A]">
       <PageContainer>
+        <ProvocationToasts toasts={provocations} onDismiss={dismissToast} />
         {status === "loading" && <p className="text-slate-200">Carregando votacao...</p>}
         {status === "invalidLink" && (
           <p className="text-slate-200">{errorMessage ?? "Token invalido ou expirado."}</p>

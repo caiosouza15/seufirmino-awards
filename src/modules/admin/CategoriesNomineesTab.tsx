@@ -49,10 +49,6 @@ export function CategoriesNomineesTab() {
   const [isNomineeModalOpen, setIsNomineeModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const selectedContestName = useMemo(
-    () => contests.find((c) => c.id === selectedContestId)?.name ?? "",
-    [contests, selectedContestId]
-  );
   const resetContestName = useMemo(
     () => contests.find((c) => c.id === resetContestId)?.name ?? "",
     [contests, resetContestId]
