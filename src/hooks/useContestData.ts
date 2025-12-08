@@ -31,7 +31,7 @@ export function useContestData(token: string | null): ContestDataResult {
   useEffect(() => {
     if (!token) {
       setStatus("invalidLink");
-      setErrorMessage("Token de votação não encontrado. Use o link enviado.");
+      setErrorMessage("Token de votacao nao encontrado. Use o link enviado.");
       return;
     }
 
@@ -39,10 +39,7 @@ export function useContestData(token: string | null): ContestDataResult {
       setStatus("loading");
       setErrorMessage(null);
 
-      const {
-        data: voterData,
-        error: voterError,
-      } = await supabase
+      const { data: voterData, error: voterError } = await supabase
         .from("voters")
         .select("*")
         .eq("code", token)
@@ -56,7 +53,7 @@ export function useContestData(token: string | null): ContestDataResult {
 
       if (!voterData) {
         setStatus("invalidLink");
-        setErrorMessage("Token inválido ou expirado.");
+        setErrorMessage("Token invalido ou expirado.");
         return;
       }
 
@@ -66,10 +63,7 @@ export function useContestData(token: string | null): ContestDataResult {
         return;
       }
 
-      const {
-        data: contestData,
-        error: contestError,
-      } = await supabase
+      const { data: contestData, error: contestError } = await supabase
         .from("contests")
         .select("*")
         .eq("id", voterData.contest_id)
@@ -83,28 +77,28 @@ export function useContestData(token: string | null): ContestDataResult {
 
       if (!contestData) {
         setStatus("invalidLink");
-        setErrorMessage("Concurso não encontrado para este token.");
+        setErrorMessage("Concurso nao encontrado para este token.");
         return;
       }
 
       const now = new Date();
-      const startAt = new Date(contestData.start_at);
-      const endAt = new Date(contestData.end_at);
+      const startAt = contestData.start_at ? new Date(contestData.start_at) : null;
+      const endAt = contestData.end_at ? new Date(contestData.end_at) : null;
+      const hasStarted = !startAt || now >= startAt;
+      const hasEnded = endAt ? now > endAt : false;
+      const isActiveWindow = contestData.is_active && hasStarted && !hasEnded;
 
-      if (now < startAt || now > endAt) {
+      if (!isActiveWindow) {
         setStatus("outOfPeriod");
         setErrorMessage(
-          now < startAt
-            ? "A votação ainda não começou. Volte em breve."
-            : "Período de votação encerrado."
+          !hasStarted
+            ? "A votacao ainda nao comecou. Volte em breve."
+            : "Periodo de votacao encerrado."
         );
         return;
       }
 
-      const {
-        data: existingVotes,
-        error: votesError,
-      } = await supabase
+      const { data: existingVotes, error: votesError } = await supabase
         .from("votes")
         .select("id")
         .eq("voter_id", voterData.id)
@@ -119,14 +113,11 @@ export function useContestData(token: string | null): ContestDataResult {
 
       if (existingVotes && existingVotes.length > 0) {
         setStatus("alreadyVoted");
-        setErrorMessage("Você já registrou seus votos para este concurso.");
+        setErrorMessage("Voce ja registrou seus votos para este concurso.");
         return;
       }
 
-      const {
-        data: categoriesData,
-        error: categoriesError,
-      } = await supabase
+      const { data: categoriesData, error: categoriesError } = await supabase
         .from("categories")
         .select("*")
         .eq("contest_id", contestData.id)
