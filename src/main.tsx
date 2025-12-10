@@ -6,7 +6,7 @@ import "./styles/globals.css";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
-    <BrowserRouter basename="/seufirmino-awards-/">
+    <BrowserRouter basename="/seufirmino-awards/">
       <App />
     </BrowserRouter>
   </StrictMode>
