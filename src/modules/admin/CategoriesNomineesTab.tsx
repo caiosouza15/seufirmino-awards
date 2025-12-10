@@ -119,7 +119,7 @@ export function CategoriesNomineesTab() {
 
   const resetCategoryForm = () => setCategoryForm(emptyCategory);
   const resetNomineeForm = () => {
-    setNomineeForm((prev) => ({ ...emptyNominee, category_id: selectedContestId }));
+    setNomineeForm(() => ({ ...emptyNominee, category_id: selectedContestId }));
     setNomineeImageFile(null);
   };
 
