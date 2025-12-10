@@ -144,7 +144,6 @@ export function ResultsPage() {
   useEffect(() => {
     if (!shouldShowOpening) {
       setIsOpeningDone(true);
-      hasIntroRun.current = true;
       return;
     }
 
