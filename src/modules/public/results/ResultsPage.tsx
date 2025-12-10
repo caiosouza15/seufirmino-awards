@@ -120,13 +120,12 @@ export function ResultsPage() {
   const [searchParams] = useSearchParams();
 
   const isDemo = searchParams.get("demo") === "true";
-  const skipIntro = searchParams.get("skipIntro") === "true";
 
   const finalStatus = isDemo ? "ready" : status;
   const finalContest = (isDemo ? demoContest : contest) ?? null;
   const finalCategories = isDemo ? demoCategories : categories;
 
-  const shouldShowOpening = !skipIntro && finalStatus === "ready";
+  const shouldShowOpening = finalStatus === "ready";
   const hasIntroRun = useRef(false);
   const [isOpeningDone, setIsOpeningDone] = useState(false);
 
@@ -142,12 +141,12 @@ export function ResultsPage() {
   }, [contest?.reveal_at]);
 
   useEffect(() => {
+    // Quando ainda nao esta pronto, mantemos intro em espera
     if (!shouldShowOpening) {
-      setIsOpeningDone(true);
-      hasIntroRun.current = true;
       return;
     }
 
+    // Quando estiver pronto e a intro nao rodou, libera para mostrar
     if (!hasIntroRun.current) {
       setIsOpeningDone(false);
     }
