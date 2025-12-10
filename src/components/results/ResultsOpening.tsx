@@ -7,7 +7,7 @@ export type ResultsOpeningProps = {
 
 export function ResultsOpening({ onFinish }: ResultsOpeningProps) {
   useEffect(() => {
-    const timer = setTimeout(onFinish, 2000);
+    const timer = setTimeout(onFinish, 4000); // give viewers time to read the intro
     return () => clearTimeout(timer);
   }, [onFinish]);
 
