@@ -127,7 +127,7 @@ export function ResultsPage() {
   const finalCategories = isDemo ? demoCategories : categories;
 
   const shouldShowOpening = !skipIntro && finalStatus === "ready";
-  const hasIntroRun = useRef(!shouldShowOpening);
+  const hasIntroRun = useRef(false);
   const [isOpeningDone, setIsOpeningDone] = useState(!shouldShowOpening);
 
   const countdown = useCountdown(contest?.reveal_at);
