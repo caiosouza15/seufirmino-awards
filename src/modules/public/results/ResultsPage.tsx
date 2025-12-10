@@ -128,7 +128,7 @@ export function ResultsPage() {
 
   const shouldShowOpening = !skipIntro && finalStatus === "ready";
   const hasIntroRun = useRef(false);
-  const [isOpeningDone, setIsOpeningDone] = useState(!shouldShowOpening);
+  const [isOpeningDone, setIsOpeningDone] = useState(false);
 
   const countdown = useCountdown(contest?.reveal_at);
 
@@ -144,6 +144,7 @@ export function ResultsPage() {
   useEffect(() => {
     if (!shouldShowOpening) {
       setIsOpeningDone(true);
+      hasIntroRun.current = true;
       return;
     }
 
