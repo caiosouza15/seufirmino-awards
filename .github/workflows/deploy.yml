@@ -20,6 +20,7 @@ jobs:
       - run: |
           echo "VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}" >> $GITHUB_ENV
           echo "VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}" >> $GITHUB_ENV
+          echo "VITE_RESULTS_CONTEST_ID=${{ secrets.VITE_RESULTS_CONTEST_ID }}" >> $GITHUB_ENV
       - run: npm ci
       - run: npm run build
       - run: cp dist/index.html dist/404.html
