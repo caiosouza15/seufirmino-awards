@@ -11,10 +11,12 @@ export function VotersTab() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const baseUrl = useMemo(
-    () => (typeof window !== "undefined" ? window.location.origin : "https://seu-dominio.com"),
-    []
-  );
+  const baseUrl = useMemo(() => {
+    if (typeof window === "undefined") return "";
+    const origin = window.location.origin;
+    const basePath = import.meta.env.BASE_URL || "/";
+    return `${origin}${basePath}#/`;
+  }, []);
 
   const loadContests = async () => {
     const { data } = await supabase.from("contests").select("*").order("created_at", {
@@ -48,7 +50,7 @@ export function VotersTab() {
   };
 
   const copyLink = async (voter: Voter) => {
-    const link = `${baseUrl}/?token=${voter.code}`;
+    const link = `${baseUrl}?token=${voter.code}`;
     try {
       await navigator.clipboard.writeText(link);
       setCopiedId(voter.id);
